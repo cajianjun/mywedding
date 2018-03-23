@@ -1,0 +1,16 @@
+mainpage 
+	request userinfo from @WX
+	request invite from @M
+		if invite
+			show invite
+		else
+			show sorry
+	come in 
+	
+subpage
+	pic 
+		request piclist by page from @M
+	chat
+		websocket from @M
+	thanks 
+		request thanks from db from @M
