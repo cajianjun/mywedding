@@ -38,7 +38,6 @@ Page({
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
-      console.log("asdasdasd")
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo

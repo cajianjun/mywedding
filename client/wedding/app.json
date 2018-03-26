@@ -10,7 +10,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "湖城IT一起浪",
+    "navigationBarTitleText": "WEDDING",
     "navigationBarTextStyle":"black"
   },
 
@@ -25,19 +25,19 @@
         "pagePath": "pages/offer/offer",
         "iconPath": "images/nav/home-off.png",
         "selectedIconPath": "images/nav/home-on.png",
-        "text": "工作"
+        "text": "婚纱照"
       },
       {
         "pagePath": "pages/chat/chat",
         "iconPath": "images/nav/cart-off.png",
         "selectedIconPath": "images/nav/cart-on.png",
-        "text": "交流"
+        "text": "聊天室"
       },
       {
         "pagePath": "pages/mine/mine",
         "iconPath": "images/nav/my-off.png",
         "selectedIconPath": "images/nav/my-on.png",
-        "text": "个人中心"
+        "text": "特别鸣谢"
       }
     ]
   }
