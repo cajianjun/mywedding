@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,13 @@ public class GreetingController {
     @Autowired
     private SimpMessagingTemplate template;
 
+    
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    public  Object test(){
+        return new HashMap<String,Object>();
+    }
+    
+    
     @RequestMapping(value = "/index")
     public  String index(){
         return "/index";
