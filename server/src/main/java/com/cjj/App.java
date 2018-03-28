@@ -1,4 +1,4 @@
-package com.ricky;
+package com.cjj;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by baiguantao on 2017/8/5.
+ * Created by  on 2017/8/5.
  */
 @SpringBootApplication
 @Configuration

@@ -1,7 +1,7 @@
  <view class="container">
     <view class="goods-container">
         <view class="goods-box" data-id="JOB1">
-           <view class="goods-title">世界上最好的语言是？</view>
+           <view class="goods-title">暂未开放</view>
             <view class="goods-view-chat" style='background:none;display:flex;'>
               <view >10 </view>
               <view >／</view>

@@ -1,4 +1,4 @@
-package com.ricky.websocket;
+package com.cjj.websocket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

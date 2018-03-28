@@ -1,4 +1,4 @@
-package com.ricky.websocket;
+package com.cjj.websocket;
 
 /**
  * 消息接收实体
