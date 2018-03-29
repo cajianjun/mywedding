@@ -5,14 +5,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBEntityFactory {
 
-	private String packageOutPath = "com.weiwei.entity";
-	private String tablename = "order";
+	private String packageOutPath = "com.cjj.entitys";
+	private String packageOutPath2 = "com.cjj.entitys";
+	private static String dbname = "wedding";
 	private String[] colnames;
 	private String[] colTypes;
 	private boolean util = false;
@@ -23,40 +29,76 @@ public class DBEntityFactory {
 		new DBEntityFactory();
 	}
 	
+	
+	
+	private  List<String> getTables(Connection conn) throws SQLException {  
+		List<String> tableNames = new ArrayList<String>();
+        DatabaseMetaData dbMetData = conn.getMetaData();  
+        // mysql convertDatabaseCharsetType null  
+        ResultSet rs = dbMetData.getTables(null,  
+        		dbname, null,  
+                new String[] { "TABLE", "VIEW" });  
+  
+        while (rs.next()) {  
+            if (rs.getString(4) != null  
+                    && (rs.getString(4).equalsIgnoreCase("TABLE") || rs  
+                            .getString(4).equalsIgnoreCase("VIEW"))) {  
+                String tableName = rs.getString(3).toLowerCase();  
+                tableNames.add(tableName) ;
+            }  
+        }  
+        return tableNames;
+    }  
+	
 	public DBEntityFactory() {
+		List<String> ignoreList = new ArrayList<String>();
+		ignoreList.add("oauth_access_token");
+		ignoreList.add("oauth_approvals");
+		ignoreList.add("oauth_client_details");
+		ignoreList.add("oauth_client_token");
+		ignoreList.add("oauth_code");
+		ignoreList.add("oauth_refresh_token");
+		ignoreList.add("user_info");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://120.27.234.14:3306/doyen_base?autoReconnect=true&useSSL=false", "laravel", "Introcks123$");
-			PreparedStatement pStemt = con.prepareStatement("select * from doyen_base." + tablename);
-			ResultSetMetaData rsmd = pStemt.getMetaData();
-			int size = rsmd.getColumnCount();
-			colnames = new String[size];
-			colTypes = new String[size];
-			for (int i = 0; i < size; i++) {
-				colnames[i] = rsmd.getColumnName(i + 1);
-				colTypes[i] = rsmd.getColumnTypeName(i + 1);
-				if (colTypes[i].equalsIgnoreCase("datetime")) {
-					util = true;
-				}
-				if (colTypes[i].equalsIgnoreCase("decimal")) {
-					decimal = true;
-				}
-//				if (colTypes[i].equalsIgnoreCase("image") || colTypes[i].equalsIgnoreCase("text")) {
-//					sql = true;
-//				}
+			Connection con = DriverManager.getConnection("jdbc:mysql://106.14.203.125:3306/" + dbname + "?autoReconnect=true&useSSL=false", "root", "caojianjun666");
+			List<String> tbNames = getTables(con);
+			for(String tbName:tbNames) {
+					if(ignoreList.indexOf(tbName) > -1) {
+						continue;
+					}
+					PreparedStatement pStemt = con.prepareStatement("select * from " + dbname + "." + tbName);
+					ResultSetMetaData rsmd = pStemt.getMetaData();
+					int size = rsmd.getColumnCount();
+					colnames = new String[size];
+					colTypes = new String[size];
+					for (int i = 0; i < size; i++) {
+						colnames[i] = rsmd.getColumnName(i + 1);
+						colTypes[i] = rsmd.getColumnTypeName(i + 1);
+						if (colTypes[i].equalsIgnoreCase("datetime")) {
+							util = true;
+						}
+						if (colTypes[i].equalsIgnoreCase("decimal")) {
+							decimal = true;
+						}
+	//				if (colTypes[i].equalsIgnoreCase("image") || colTypes[i].equalsIgnoreCase("text")) {
+	//					sql = true;
+	//				}
+					}
+					String content = parse(colnames, colTypes,tbName);
+					File directory = new File("");
+					String outputPath = directory.getAbsolutePath() + "/src/main/java/" + this.packageOutPath.replace(".", "/") + "/"
+							+ initcap(name2Tuofeng(tbName)) + "Entity.java";
+					createIfNotExist(outputPath);
+					FileWriter fw = new FileWriter(outputPath);
+					
+					
+					PrintWriter pw = new PrintWriter(fw);
+					pw.print(content);
+					pw.flush();
+					pw.close();
+					System.out.println(outputPath + "done");
 			}
-			String content = parse(colnames, colTypes);
-			File directory = new File("");
-			String outputPath = directory.getAbsolutePath() + "/src/main/java/" + this.packageOutPath.replace(".", "/") + "/"
-					+ initcap(name2Tuofeng(tablename)) + "Entity.java";
-			createIfNotExist(outputPath);
-			FileWriter fw = new FileWriter(outputPath);
-			
-			
-			PrintWriter pw = new PrintWriter(fw);
-			pw.print(content);
-			pw.flush();
-			pw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,7 +118,7 @@ public class DBEntityFactory {
 	}
 	
 	/**
-	 * 下划线风格的字符串转化成驼峰命名的字符串例如：table_user ->tableUser
+	 * 涓嬪垝绾块鏍肩殑瀛楃涓茶浆鍖栨垚椹煎嘲鍛藉悕鐨勫瓧绗︿覆渚嬪锛歵able_user ->tableUser
 	 * @param s
 	 * @return
 	 */
@@ -97,7 +139,7 @@ public class DBEntityFactory {
 	}
 	
 	/**
-	 * 末尾连接结束符
+	 * 鏈熬杩炴帴缁撴潫绗�
 	 * @param sb
 	 * @param content
 	 */
@@ -105,9 +147,9 @@ public class DBEntityFactory {
 		sb.append(content).append(lineSeparator);
 	}
 
-	private String parse(String[] colnames, String[] colTypes) {
+	private String parse(String[] colnames, String[] colTypes,String tablename) {
 		StringBuilder sb = new StringBuilder();
-		appendL(sb, "package " + this.packageOutPath + ";");
+		appendL(sb, "package " + this.packageOutPath2 + ";");
 		if (util) {
 			appendL(sb,"import java.util.Date;");
 		}
@@ -148,7 +190,7 @@ public class DBEntityFactory {
 	}
 
 	/**
-	 * 首字母大写
+	 * 棣栧瓧姣嶅ぇ鍐�
 	 * @param str
 	 * @return
 	 */
