@@ -3,6 +3,7 @@ package com.cjj.wedding.service.impl;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import com.cjj.common.WXConsts;
 import com.cjj.entitys.UserEntity;
 import com.cjj.wedding.service.UserService;
 
@@ -24,11 +25,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String getTokenFromWX() {
+	public String getTokenFromWX(String code) {
 		// TODO Auto-generated method stub
 		RestTemplate rest = getRestTemplate();
-//		https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
-		return null;
+		String url = WXConsts.WX_TOKEN_URL_PREFIX + code ;
+		String s = rest.postForObject(url,new Object(),String.class);
+		return s;
 	}
 
 }

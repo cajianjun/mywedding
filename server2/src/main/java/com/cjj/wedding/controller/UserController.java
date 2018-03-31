@@ -18,7 +18,7 @@ public class UserController {
 	
 	@ApiOperation(value="获取用户openid和sessionkey", notes="从微信服务端获取openid和sessionkey", produces = "application/json")  
 	@RequestMapping(value = "token", method = RequestMethod.POST)
-	public GeneralResponse countByYear(String code) {
+	public GeneralResponse token(String code) {
 		logger.info("countByYear code=" + code);
 		
 		return esoperateService.countByYear(request);
