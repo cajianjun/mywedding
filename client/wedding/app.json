@@ -1,6 +1,9 @@
 {
   "pages":[
+    "pages/launch/launch",
     "pages/index/index",
+    "pages/invite/invite",
+    
     "pages/logs/logs",
     "pages/main/main",
     "pages/offer/offer",

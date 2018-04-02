@@ -1,0 +1,13 @@
+.bg1 {
+  position: absolute;
+  z-index: -3;
+  height: 100%;
+  width: 100%;
+}
+.bg2 {
+  position: absolute;
+  left:13%;
+  z-index: -2;
+  height: 100%;
+  width: 75%;
+}
