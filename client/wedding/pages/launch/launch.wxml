@@ -1,2 +1,14 @@
 <image class="bg1" src="/images/bgs/launch_bg1.png"></image>
 <image class="bg2" src="/images/bgs/launch_bg2.png"></image>
+
+<image class="item item4" src="/images/bgs/launch_item4.png"></image>
+<image class="item item3" src="/images/bgs/launch_item3.png"></image>
+<image class="item item2" src="/images/bgs/launch_item2.png"></image>
+<image class="item item1" src="/images/bgs/launch_item1.png"></image>
+
+<text class="text_date"></text>
+<text class="text_name"></text>
+
+<view class="confirm-btn" bindtap='gotoInvite'>
+  <text >check</text>
+</view>

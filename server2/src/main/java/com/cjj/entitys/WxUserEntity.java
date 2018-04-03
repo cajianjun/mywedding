@@ -6,14 +6,16 @@ public class WxUserEntity{
 	private String wxToken;
 	private String wxUserinfoJson;
 	private Date joinTime;
+	private String realName;
 	public WxUserEntity(){}
-	public WxUserEntity(Integer id,String wxNickname,String wxToken,String wxUserinfoJson,Date joinTime){
+	public WxUserEntity(Integer id,String wxNickname,String wxToken,String wxUserinfoJson,Date joinTime,String realName){
 		this();
 		this.id=id;
 		this.wxNickname=wxNickname;
 		this.wxToken=wxToken;
 		this.wxUserinfoJson=wxUserinfoJson;
 		this.joinTime=joinTime;
+		this.realName=realName;
 	}
 	public void setId(Integer id){this.id=id;}
 	public Integer getId(){return id;}
@@ -25,4 +27,6 @@ public class WxUserEntity{
 	public String getWxUserinfoJson(){return wxUserinfoJson;}
 	public void setJoinTime(Date joinTime){this.joinTime=joinTime;}
 	public Date getJoinTime(){return joinTime;}
+	public void setRealName(String realName){this.realName=realName;}
+	public String getRealName(){return realName;}
 }

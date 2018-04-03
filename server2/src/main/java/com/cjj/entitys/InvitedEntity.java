@@ -1,19 +1,19 @@
 package com.cjj.entitys;
-public class UserEntity{
+public class InvitedEntity{
 	private Integer id;
-	private String wxToken;
+	private String invitedNick;
 	private String realName;
-	public UserEntity(){}
-	public UserEntity(Integer id,String wxToken,String realName){
+	public InvitedEntity(){}
+	public InvitedEntity(Integer id,String invitedNick,String realName){
 		this();
 		this.id=id;
-		this.wxToken=wxToken;
+		this.invitedNick=invitedNick;
 		this.realName=realName;
 	}
 	public void setId(Integer id){this.id=id;}
 	public Integer getId(){return id;}
-	public void setWxToken(String wxToken){this.wxToken=wxToken;}
-	public String getWxToken(){return wxToken;}
+	public void setInvitedNick(String invitedNick){this.invitedNick=invitedNick;}
+	public String getInvitedNick(){return invitedNick;}
 	public void setRealName(String realName){this.realName=realName;}
 	public String getRealName(){return realName;}
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cjj.common.ErrorCode;
 import com.cjj.response.GeneralResponse;
-import com.cjj.wedding.service.TestService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -22,16 +21,16 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("test")
 public class AdminTestController {
 	
-	@Autowired
-	TestService testSerivice;
+//	@Autowired
+//	TestService testSerivice;
 	
 	
 	
 	@ApiOperation(value="测试", notes="测试", produces = "application/json")  
 	@RequestMapping(value = "test", method = RequestMethod.POST)
 	public GeneralResponse test() {
-		String s = testSerivice.test();
-		return new GeneralResponse(s, ErrorCode.OK);
+//		String s = testSerivice.test();
+		return new GeneralResponse("", ErrorCode.OK);
 	}
 	
 	

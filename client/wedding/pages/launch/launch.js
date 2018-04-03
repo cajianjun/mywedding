@@ -62,5 +62,10 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  gotoInvite: function () {
+    wx.navigateTo({
+      url: '/pages/invite/invite',
+    });
   }
 })
