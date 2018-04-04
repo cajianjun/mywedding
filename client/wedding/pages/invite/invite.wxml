@@ -3,7 +3,7 @@
 <image class="invite-kuang" src="/images/bgs/invite_kuang.png"></image>
  
 <text class="invite-title">诚挚邀请</text>
-<text class="invite-content">两颗小小的心从此被系在一起\n在这个美丽的日子里\n我们决定让幸福永恒\n期待我们的婚礼有你们的见证\nXXX and XXX</text>
+<text class="invite-content">两颗小小的心从此被系在一起\n在这个美丽的日子里\n我们决定让幸福永恒\n期待我们的婚礼有你们的见证\n{{invitedName}}</text>
 
 <text class="invite-time">时间：2018年5月6日</text>
 <text class="invite-addr">地点：湖州市南浔区千金镇朝阳村港北43号</text>

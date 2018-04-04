@@ -1,3 +1,5 @@
+var net = require('../../utils/net.js')
+var app = getApp();
 // pages/launch/launch.js
 Page({
 
@@ -64,7 +66,9 @@ Page({
   
   },
   gotoInvite: function () {
-    wx.navigateTo({
+    var nickname = app.globalData.userInfo
+    var token = app.globalData.token;
+    wx.switchTab({
       url: '/pages/invite/invite',
     });
   }

@@ -23,10 +23,10 @@ public interface WXUserMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id") 
 	Long insert(WxUserEntity entity);
 	
-	@Update("UPDATE SET wx_nickname=#{wx_nickname},wx_userinfo_json=#{wx_userinfo_json} where wx_token=#{wx_token}")
+	@Update("UPDATE wx_user SET wx_nickname=#{wx_nickname},wx_userinfo_json=#{wx_userinfo_json} where wx_token=#{wx_token}")
 	void updateWxUser(@Param("wx_token") String token,@Param("wx_nickname") String nickname,@Param("wx_userinfo_json") String json);
 	
-	@Update("UPDATE SET real_name=#{real_name} where wx_token=#{wx_token}")
+	@Update("UPDATE wx_user SET real_name=#{real_name} where wx_token=#{wx_token}")
 	void updateWxUserRealName(@Param("wx_token") String token,@Param("real_name") String real_name);
 	
 	@Select("SELECT * FROM invited ")

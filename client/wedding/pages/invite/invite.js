@@ -1,4 +1,6 @@
 // pages/invite/invite.js
+var net = require('../../utils/net.js')
+var app = getApp()
 Page({
 
   /**
@@ -12,15 +14,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.getUserInfo({
-      success: res => {
-        app.globalData.userInfo = res.userInfo
-        this.setData({
-          userInfo: res.userInfo
-        })
-        // userInfo中获取
+    net.post("/user/invite",app.globalData.userInfo,(data)=>{
+      if(data == ""){//未邀请
+        app.globalData.invitedName = "暂未被邀请";
+        wx.navigateTo({
+              url: '/pages/notinvite/notinvite',
+            });
+      }else{//已邀请
+        app.globalData.invitedName = data;
+        wx.navigateTo({
+              url: '/pages/invite/invite',
+            });
       }
+      this.setData({
+        invitedName:app.globalData.invitedName
+      })
     })
+    if (app.globalData.invitedName){
+      this.setData({
+        invitedName: app.globalData.invitedName
+      })
+    }
+    
   },
 
   /**

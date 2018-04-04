@@ -30,10 +30,10 @@
         "text": "婚纱照"
       },
       {
-        "pagePath": "pages/chat/chat",
+        "pagePath": "pages/invite/invite",
         "iconPath": "images/nav/cart-off.png",
         "selectedIconPath": "images/nav/cart-on.png",
-        "text": "聊天室"
+        "text": "邀请函"
       },
       {
         "pagePath": "pages/mine/mine",
