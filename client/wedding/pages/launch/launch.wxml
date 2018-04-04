@@ -6,9 +6,10 @@
 <image class="item item2" src="/images/bgs/launch_item2.png"></image>
 <image class="item item1" src="/images/bgs/launch_item1.png"></image>
 
-<text class="text_date"></text>
-<text class="text_name"></text>
 
-<view class="confirm-btn" bindtap='gotoInvite'>
-  <text >check</text>
+<text class="item text_date">MAY 6TH 2018</text>
+<text class="item text_name">曹建军&梁开妍</text>
+
+<view class="item confirm-btn" bindtap='gotoInvite'>
+  <text >查看邀请涵</text>
 </view>
