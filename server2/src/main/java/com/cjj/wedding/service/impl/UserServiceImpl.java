@@ -1,10 +1,10 @@
 package com.cjj.wedding.service.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.cjj.common.WXConsts;
+import com.cjj.dto.InviteInfoDTO;
 import com.cjj.dto.WXUserDTO;
 import com.cjj.entitys.InvitedEntity;
+import com.cjj.entitys.UserMsgEntity;
 import com.cjj.entitys.WxUserEntity;
+import com.cjj.mapper.MsgMapper;
 import com.cjj.mapper.WXUserMapper;
 import com.cjj.util.JSONUtils;
 import com.cjj.util.StrUtils;
-import com.cjj.wedding.controller.UserController;
 import com.cjj.wedding.service.UserService;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class UserServiceImpl implements UserService{
@@ -33,7 +33,9 @@ public class UserServiceImpl implements UserService{
     
 	@Autowired
 	WXUserMapper wXUserMapper;
-	
+
+	@Autowired
+	MsgMapper msgMapper;
 	
 	private RestTemplate getRestTemplate() {
 		requestFactory.setConnectTimeout(10000);// 设置超时  
@@ -75,8 +77,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String checkInvite(String token,WXUserDTO userinfo) {
-		
+	public InviteInfoDTO checkInvite(String token,WXUserDTO userinfo) {
+		InviteInfoDTO dto = new InviteInfoDTO();
 		String inviteName = "";
 		//从userinfo里面获取nickname
 		String nickname = userinfo.getNickName();
@@ -85,6 +87,11 @@ public class UserServiceImpl implements UserService{
 		if(StrUtils.isNotEmpty(rn)) {
 			//如果已经能查到realname，直接返回，已经被邀请
 			inviteName = rn;
+			List<InvitedEntity> tmpLit = wXUserMapper.getInvitedByRealName(rn);
+			if(tmpLit .size() > 0){
+				dto.setType(tmpLit.get(0).getNvfang());
+			}
+			dto.setInviteName(inviteName);
 		}else {
 			//如果user表中没有标记真名
 			List<InvitedEntity> all = wXUserMapper.getAllInvited();
@@ -95,17 +102,40 @@ public class UserServiceImpl implements UserService{
 			if(invitedNicks.contains("ALL")) {
 				//全通过模式,都接受邀请，邀请的名字是nickname
 				inviteName = nickname;
+				
+				dto.setType(0);
+				dto.setInviteName(inviteName);
 			}
 			for(InvitedEntity x :all){
 				if(x.getInvitedNick().equals(nickname)) {
 					//在被邀请名单中，需要
 					wXUserMapper.updateWxUserRealName(token,x.getRealName());
 					inviteName = x.getRealName();
+					dto.setType(x.getNvfang());
+					dto.setInviteName(inviteName);
 				}
 			};
 		}
 		wXUserMapper.updateWxUser(token, nickname, JSONUtils.Obj2Json(userinfo));
-		return inviteName;
+		if(StringUtils.isEmpty(dto.getInviteName())){
+			dto.setInviteName("");
+		}
+		if(dto.getType() == 1){
+			dto.setAddress(ADDR_LIANG);
+		}else{
+			dto.setAddress(ADDR_CAO);
+		}
+		return dto;
+	}
+	public final static String ADDR_CAO = "地点：湖州市南浔区千金镇朝阳村港北43号";
+	public final static String ADDR_LIANG = "地点：湖州市乌程大酒店（儿童公园对面）百合厅";
+
+	@Override
+	public void addMsg(String token, String msg) {
+		UserMsgEntity ett = new UserMsgEntity();
+		ett.setWxToken(token);
+		ett.setMsg(msg);
+		msgMapper.insert(ett);
 	}
 
 }

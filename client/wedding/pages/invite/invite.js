@@ -1,5 +1,6 @@
 // pages/invite/invite.js
 var net = require('../../utils/net.js')
+var reAuth = require('../../utils/reAuth.js')
 var app = getApp()
 Page({
 
@@ -7,49 +8,37 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    invited:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    net.post("/user/invite",app.globalData.userInfo,(data)=>{
-      if(data == ""){//未邀请
-        app.globalData.invitedName = "暂未被邀请";
-        wx.navigateTo({
-              url: '/pages/notinvite/notinvite',
-            });
-      }else{//已邀请
-        app.globalData.invitedName = data;
-        wx.navigateTo({
-              url: '/pages/invite/invite',
-            });
-      }
-      this.setData({
-        invitedName:app.globalData.invitedName
-      })
-    })
-    if (app.globalData.invitedName){
-      this.setData({
-        invitedName: app.globalData.invitedName
-      })
+    var that = this;
+    if (!(app.globalData.userInfo)){
+      reAuth.reAuth((res)=>{
+        if("OK" == res){
+          that.judgeInvite();
+        }
+      });
+    }else{
+      that.judgeInvite();
     }
-    
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.judgeInvite();
   },
 
   /**
@@ -85,5 +74,24 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+
+  judgeInvite:function(){
+    var that = this;
+    if (app.globalData.userInfo && (that.data.judged != true)){
+      net.post("/user/invite", app.globalData.userInfo, (data) => {
+        if (data.inviteName == "") {//未邀请
+          that.setData({ invited: false,judged:true });
+          app.globalData.invitedName = "暂未被邀请";
+        } else {//已邀请
+          that.setData({ invited: true, judged: true,address:data.address});
+          app.globalData.invitedName = data.inviteName;
+
+        }
+        this.setData({
+          invitedName: app.globalData.invitedName
+        })
+      })
+    }
   }
 })

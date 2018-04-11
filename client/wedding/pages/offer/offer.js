@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
-var app = getApp()
+var net = require('../../utils/net.js')
+var app = getApp();
 Page({
   data: {
     indicatorDots: true,
@@ -38,7 +39,7 @@ Page({
   tapBanner: function (e) {
     if (e.currentTarget.dataset.id != 0) {
       wx.navigateTo({
-        url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
+        url: "/pages/pic_group/pic_group?groupId=" + e.currentTarget.dataset.id
       })
     }
   },
@@ -59,15 +60,20 @@ Page({
   onLoad: function () {
     var that = this
     wx.setNavigationBarTitle({
-      title: wx.getStorageSync('mallName')
+      title: "相册"
     });
-    // http://www.51ztzj.com/upload/image/20150320/sj201503201003_720x1280.jpg
-    // var s = '[{"businessId":4036,"dateAdd":"2017-09-15 08:29:50","dateUpdate":"2017-09-20 21:14:36","id":1148,"linkUrl":"","paixu":0,"picUrl":"https://cdn.it120.cc/apifactory/2017/09/15/145c582252a7a20f21ad9a025ae8c9be.png","remark":"","status":0,"statusStr":"显示","title":"1","type":"1","userId":951},{"businessId":0,"dateAdd":"2017-09-15 08:37:04","dateUpdate":"2017-09-15 08:37:25","id":1150,"linkUrl":"","paixu":2,"picUrl":"https://cdn.it120.cc/apifactory/2017/09/15/73560c511f554eb4afd1dcade9d8ef67.png","remark":"","status":0,"statusStr":"显示","title":"3","type":"1","userId":951},{"businessId":3776,"dateAdd":"2017-09-15 08:34:33","dateUpdate":"2017-09-20 21:15:54","id":1149,"linkUrl":"","paixu":3,"picUrl":"https://cdn.it120.cc/apifactory/2017/09/15/5acdd8f65ec85b413ee642dda795d835.png","remark":"","status":0,"statusStr":"显示","title":"2","type":"1","userId":951}]';
-    var s = '[{"businessId":4036,"dateAdd":"2017-09-15 08:29:50","dateUpdate":"2017-09-20 21:14:36","id":1148,"linkUrl":"","paixu":0,"picUrl":"http://pic.nobbican.com/all/01.jpeg","remark":"","status":0,"statusStr":"显示","title":"1","type":"1","userId":951},{"businessId":0,"dateAdd":"2017-09-15 08:37:04","dateUpdate":"2017-09-15 08:37:25","id":1150,"linkUrl":"","paixu":2,"picUrl":"http://pic.nobbican.com/all/02.jpeg","remark":"","status":0,"statusStr":"显示","title":"3","type":"1","userId":951},{"businessId":3776,"dateAdd":"2017-09-15 08:34:33","dateUpdate":"2017-09-20 21:15:54","id":1149,"linkUrl":"","paixu":3,"picUrl":"http://pic.nobbican.com/all/03.jpeg","remark":"","status":0,"statusStr":"显示","title":"2","type":"1","userId":951}]';
+    net.get("/pic/group",data =>{
+      that.setData({
+        banners: data
+      });
+    })
+    /*
+    var s = '[{"businessId":4036,"picUrl":"http://pic.nobbican.com/all/01.jpeg"},{"businessId":0,"picUrl":"http://pic.nobbican.com/all/02.jpeg"},{"businessId":3776,"picUrl":"http://pic.nobbican.com/all/03.jpeg"}]';
     var bannerData = JSON.parse(s);
     that.setData({
       banners: bannerData
     });
+    */
     
   }
 })

@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cjj.dto.InviteInfoDTO;
 import com.cjj.request.CodeRequest;
+import com.cjj.request.DataRequest;
 import com.cjj.request.UserInfoRequest;
 import com.cjj.response.GeneralResponse;
+import com.cjj.util.EmojiFilter;
 import com.cjj.util.StrUtils;
 import com.cjj.wedding.service.UserService;
 
@@ -36,12 +39,17 @@ public class UserController {
 	@RequestMapping(value = "invite", method = RequestMethod.POST)
 	public GeneralResponse invite(@RequestBody UserInfoRequest req) {
 		logger.info("invote,req = " + req);
-		String realname = userService.checkInvite(req.getToken(),req.getData());
-		if(StrUtils.isEmpty(realname)) {
-			return GeneralResponse.SUCCESS("");
-		}else {
-			return GeneralResponse.SUCCESS(realname);
-		}
+		req.getData().setNickName(EmojiFilter.filterEmoji(req.getData().getNickName()));
+		InviteInfoDTO dto = userService.checkInvite(req.getToken(),req.getData());
+		return GeneralResponse.SUCCESS(dto);
+	}
+	
+	@ApiOperation(value="获取用户openid和sessionkey", notes="从微信服务端获取openid和sessionkey", produces = "application/json")  
+	@RequestMapping(value = "msg", method = RequestMethod.POST)
+	public GeneralResponse msg(@RequestBody DataRequest req) {
+		logger.info("msg req=" + req.toString());
+		userService.addMsg(req.getToken(), EmojiFilter.filterEmoji(req.getData()));
+		return GeneralResponse.SUCCESS();
 	}
 	
 }

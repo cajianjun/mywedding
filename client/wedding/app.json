@@ -1,13 +1,15 @@
 {
   "pages":[
-    "pages/launch/launch",
+"pages/launch/launch",
+"pages/mine/mine",
     "pages/index/index",
     "pages/invite/invite",
     "pages/logs/logs",
     "pages/main/main",
     "pages/offer/offer",
     "pages/chat/chat",
-    "pages/mine/mine"
+    "pages/pic_group/pic_group",
+    "pages/pic_group_detail/pic_group_detail"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -25,21 +27,21 @@
     "list": [
       {
         "pagePath": "pages/offer/offer",
-        "iconPath": "images/nav/home-off.png",
-        "selectedIconPath": "images/nav/home-on.png",
+        "iconPath": "images/nav/photo-off.png",
+        "selectedIconPath": "images/nav/photo-on.png",
         "text": "婚纱照"
       },
       {
         "pagePath": "pages/invite/invite",
-        "iconPath": "images/nav/cart-off.png",
-        "selectedIconPath": "images/nav/cart-on.png",
+        "iconPath": "images/nav/invite-off.png",
+        "selectedIconPath": "images/nav/invite-on.png",
         "text": "邀请函"
       },
       {
         "pagePath": "pages/mine/mine",
-        "iconPath": "images/nav/my-off.png",
-        "selectedIconPath": "images/nav/my-on.png",
-        "text": "特别鸣谢"
+        "iconPath": "images/nav/msg-off.png",
+        "selectedIconPath": "images/nav/msg-on.png",
+        "text": "祝福"
       }
     ]
   }

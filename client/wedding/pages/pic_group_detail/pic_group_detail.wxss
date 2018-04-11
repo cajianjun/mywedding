@@ -1,0 +1,5 @@
+/* pages/pic_group_detail/pic_group_detail.wxss */
+.img_detail{
+  height:1200rpx;
+  width:750rpx;
+}

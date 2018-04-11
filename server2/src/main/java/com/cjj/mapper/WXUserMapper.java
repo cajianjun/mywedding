@@ -31,4 +31,7 @@ public interface WXUserMapper {
 	
 	@Select("SELECT * FROM invited ")
   	List<InvitedEntity> getAllInvited();
+	
+	@Select("SELECT * FROM invited WHERE real_name=#{real_name}")
+  	List<InvitedEntity> getInvitedByRealName(@Param("real_name") String real_name);
 }

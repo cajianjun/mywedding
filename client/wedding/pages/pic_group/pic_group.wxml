@@ -1,0 +1,8 @@
+<view class="img_list">
+    <view 
+    wx:key="pics" wx:for-item="item" wx:for-index="itemIdx"
+    
+    wx:for="{{ pics }}" class="img_wrap" bindtap="imgTap" data-id="{{item}}">
+        <image src="{{ item }}"  class="fade_in" />
+    </view>
+</view>

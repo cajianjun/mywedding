@@ -53,5 +53,12 @@ public class WXUserDTO {
 	public WXUserDTO() {
 		super();
 	}
+	@Override
+	public String toString() {
+		return "WXUserDTO [avatarUrl=" + avatarUrl + ", city=" + city
+				+ ", country=" + country + ", gender=" + gender + ", language="
+				+ language + ", province=" + province + ", nickName="
+				+ nickName + "]";
+	}
 	
 }

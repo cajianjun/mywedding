@@ -1,39 +1,73 @@
-const app = getApp()
-
+var net = require('../../utils/net.js')
+var reAuth = require('../../utils/reAuth.js')
+var app = getApp();
 Page({
   data: {
-    balance: 0,
-    freeze: 0,
-    score: 0,
-    score_sign_continuous: 0
+    height: 20,
+    focus: false,
+    words:"",
+    toastHidden: true,  
+    tooLong: '简单点，说话的方式简单点，不能超过100字',
+    tooShort:"不能发送空消息，后台会报错的",
+    thanks: "发送成功，感谢",
+    toastText:"" 
   },
-  onLoad() {
-
-  },
-  onShow() {
-    this.getUserInfo();
-  },
-  getUserInfo: function (cb) {
-    var that = this
-    wx.login({
-      success: function () {
-        wx.getUserInfo({
-          success: function (res) {
-            that.setData({
-              userInfo: res.userInfo
-            });
-          }
+  sendPost:function(){
+    var that = this;
+    if (app.globalData.userInfo) {
+      if (that.data.words.length > 100) {
+        that.setData({
+          toastHidden: false,
+          toastText: that.data.tooLong
         })
+      } else if (that.data.words.trim().length == 0) {
+        that.setData({
+          toastHidden: false,
+          toastText: that.data.tooShort
+        })
+      } else {
+        net.post("/user/msg", that.data.words, resp => {
+          that.setData({
+            toastHidden: false,
+            toastText: that.data.thanks
+          })
+        });
       }
-    })
-  },
-  aboutUs: function () {
-    wx.showModal({
-      title: '关于我们',
-      content: '关于我们不清楚，关于理想我从来没选择放弃！',
-      showCancel: false
-    })
+    }
   }
-  
-  
+  ,
+
+  send: function () {
+    var that = this;
+    if (!app.globalData.userInfo){
+      reAuth.reAuth(that.sendPost)
+    }else{
+      that.sendPost();
+    }
+    
+    
+  },
+  textInput:function(e){
+    this.setData({
+      words: e.detail.value,
+    });
+  },
+  textBlur:function(e){
+    
+    if(e.detail.value.length > 100){
+      this.setData({
+        toastHidden: false,
+        toastText: this.data.tooLong
+      })
+    }
+  },
+  onToastChanged: function () {
+    this.setData({ toastHidden: !this.data.toastHidden });
+  },
+  onLoad: function () {
+    this.setData({
+      toastHidden: true, //吐司  
+      words:""
+    })
+  }  
 })

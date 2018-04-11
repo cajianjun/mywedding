@@ -1,5 +1,8 @@
-var rootPath = "http://localhost:8888";
+var rootPath = "https://wedding.nobbican.com";
 function post(path,data,cb){
+  if (!getApp().globalData.token){
+    return;
+  }
 	wx.request({
           url: rootPath + path,
           method:'POST',
@@ -16,7 +19,7 @@ function post(path,data,cb){
         })
 }
 
-function post(path,data,cb){
+function getR(path,cb){
   wx.request({
           url: rootPath + path,
           method:'GET',
@@ -31,5 +34,5 @@ function post(path,data,cb){
 
 module.exports = {
   post: post,
-  get:get
+  get:getR
 }
