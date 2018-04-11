@@ -107,8 +107,10 @@ public class UserServiceImpl implements UserService{
 				dto.setInviteName(inviteName);
 			}
 			for(InvitedEntity x :all){
+				logger.info("要比较了，nickName=" + nickname + ",invitenick=" + x.getInvitedNick());
 				if(x.getInvitedNick().equals(nickname)) {
 					//在被邀请名单中，需要
+					logger.info("匹配到名字相同了，有被邀请到");
 					wXUserMapper.updateWxUserRealName(token,x.getRealName());
 					inviteName = x.getRealName();
 					dto.setType(x.getNvfang());
@@ -127,6 +129,18 @@ public class UserServiceImpl implements UserService{
 		}
 		return dto;
 	}
+	
+	
+	
+//	public static void main(String[] args) {
+//		String s = "应帅";
+//		String s2 = "应帅";
+//		if(s.equals(s2)) {
+//			System.out.println(true);
+//		}else {
+//			System.out.println(false);
+//		}
+//	}
 	public final static String ADDR_CAO = "地点：湖州市南浔区千金镇朝阳村港北43号";
 	public final static String ADDR_LIANG = "地点：湖州市乌程大酒店（儿童公园对面）百合厅";
 
