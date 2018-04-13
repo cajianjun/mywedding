@@ -14,12 +14,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cjj.common.WXConsts;
 import com.cjj.dto.InviteInfoDTO;
+import com.cjj.dto.MsgDTO;
 import com.cjj.dto.WXUserDTO;
 import com.cjj.entitys.InvitedEntity;
 import com.cjj.entitys.UserMsgEntity;
 import com.cjj.entitys.WxUserEntity;
 import com.cjj.mapper.MsgMapper;
 import com.cjj.mapper.WXUserMapper;
+import com.cjj.request.PageRequest;
 import com.cjj.util.JSONUtils;
 import com.cjj.util.StrUtils;
 import com.cjj.wedding.service.UserService;
@@ -150,6 +152,13 @@ public class UserServiceImpl implements UserService{
 		ett.setWxToken(token);
 		ett.setMsg(msg);
 		msgMapper.insert(ett);
+	}
+
+
+	@Override
+	public List<MsgDTO> listMsg(PageRequest req) {
+		
+		return null;
 	}
 
 }

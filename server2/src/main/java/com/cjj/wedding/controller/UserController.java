@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cjj.dto.InviteInfoDTO;
 import com.cjj.request.CodeRequest;
 import com.cjj.request.DataRequest;
+import com.cjj.request.PageRequest;
 import com.cjj.request.UserInfoRequest;
 import com.cjj.response.GeneralResponse;
 import com.cjj.util.EmojiFilter;
-import com.cjj.util.StrUtils;
 import com.cjj.wedding.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -48,6 +48,14 @@ public class UserController {
 	@RequestMapping(value = "msg", method = RequestMethod.POST)
 	public GeneralResponse msg(@RequestBody DataRequest req) {
 		logger.info("msg req=" + req.toString());
+		userService.addMsg(req.getToken(), EmojiFilter.filterEmoji(req.getData()));
+		return GeneralResponse.SUCCESS();
+	}
+	
+	@ApiOperation(value="获取用户openid和sessionkey", notes="从微信服务端获取openid和sessionkey", produces = "application/json")  
+	@RequestMapping(value = "getMsg", method = RequestMethod.POST)
+	public GeneralResponse getMsg(@RequestBody PageRequest req) {
+		logger.info("getMsg req=" + req.toString());
 		userService.addMsg(req.getToken(), EmojiFilter.filterEmoji(req.getData()));
 		return GeneralResponse.SUCCESS();
 	}
