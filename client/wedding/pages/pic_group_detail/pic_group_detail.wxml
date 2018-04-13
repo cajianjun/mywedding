@@ -1,1 +1,3 @@
-<image class="img_detail" src="{{ pic }}" style=""></image>
+
+
+<image  data-src="{{ pic }}" style="{{picstyle}}" bindload="imageLoad" class="topic__content__item__img" src="{{ pic }}"/>

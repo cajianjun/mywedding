@@ -1,8 +1,16 @@
-<view class="content">
+<!-- <view class="content">
 <textarea bindblur="textBlur" bindinput='textInput' class="input_text" placeholder="说点什么吧，说不定会得到我们的回复呢"   />  
 <button type="default" class="btn_send" bindtap='send'>发送</button>
-</view>
+</view> -->
 
+
+<view class="container" >  
+    <button type="primary"bindtap="modalinput">发送祝福</button>   
+</view> 
+
+<modal hidden="{{hiddenmodalput}}" title="发送祝福" confirm-text="提交" cancel-text="重置" bindcancel="cancel" bindconfirm="confirm">  
+    <input type='text' bindblur="textBlur" bindinput='textInput' placeholder="说点什么吧，说不定会得到我们的回复呢" auto-focus/>  
+</modal> 
 
 <toast hidden="{{toastHidden}}" duration="2000" bindchange="onToastChanged">    
         {{toastText}}    

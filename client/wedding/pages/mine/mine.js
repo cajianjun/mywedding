@@ -10,7 +10,8 @@ Page({
     tooLong: '简单点，说话的方式简单点，不能超过100字',
     tooShort:"不能发送空消息，后台会报错的",
     thanks: "发送成功，感谢",
-    toastText:"" 
+    toastText:"" ,
+    hiddenmodalput: true
   },
   sendPost:function(){
     var that = this;
@@ -69,5 +70,24 @@ Page({
       toastHidden: true, //吐司  
       words:""
     })
-  }  
+  },
+   //点击按钮痰喘指定的hiddenmodalput弹出框  
+    modalinput: function () {
+    this.setData({
+      hiddenmodalput: !this.data.hiddenmodalput
+    })
+  },
+  //取消按钮  
+  cancel: function () {
+    this.setData({
+      hiddenmodalput: true
+    });
+  },
+  //确认  
+  confirm: function () {
+    this.setData({
+      hiddenmodalput: true
+    })
+    this.send();
+  }   
 })

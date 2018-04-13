@@ -1,5 +1,5 @@
 .input_text{
-  height:900rpx;
+  height:300rpx;
   width:750rpx;
 }
 

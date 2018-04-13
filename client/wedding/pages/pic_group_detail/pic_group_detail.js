@@ -12,7 +12,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.pic);
+    var winWidth = null, dp = 1;
+    try {
+      var winWidth = wx.getSystemInfoSync().windowWidth;
+    } catch (e) { };
+    if (winWidth) {
+      dp = winWidth / 750;
+    }
+    this.dp = dp;
     this.setData({pic:options.pic});
   },
 
@@ -63,5 +70,19 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  imageLoad: function (e) {
+    var id = e.currentTarget.dataset.src;
+    var img_w = e.detail.width;
+    var img_h = e.detail.height;
+    var ratio = 750 / img_w;
+
+    if ((img_w / this.dp) >= 750) {
+      var imageStyle = 'width: ' + 750 + 'rpx; height:' + img_h * ratio + 'rpx;';
+    } else {
+      var imageStyle = 'width: ' + img_w + 'px; height:' + img_h + 'px;';
+    }
+    this.setData({ picstyle: imageStyle });
+
   }
 })
