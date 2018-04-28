@@ -15,12 +15,14 @@ import org.springframework.web.client.RestTemplate;
 import com.cjj.common.WXConsts;
 import com.cjj.dto.InviteInfoDTO;
 import com.cjj.dto.MsgDTO;
+import com.cjj.dto.MsgEntityDTO;
 import com.cjj.dto.WXUserDTO;
 import com.cjj.entitys.InvitedEntity;
 import com.cjj.entitys.UserMsgEntity;
 import com.cjj.entitys.WxUserEntity;
 import com.cjj.mapper.MsgMapper;
 import com.cjj.mapper.WXUserMapper;
+import com.cjj.request.MsgListRequest;
 import com.cjj.request.PageRequest;
 import com.cjj.util.JSONUtils;
 import com.cjj.util.StrUtils;
@@ -156,7 +158,8 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public List<MsgDTO> listMsg(PageRequest req) {
+	public List<MsgDTO> listMsg(MsgListRequest req) {
+		List<MsgEntityDTO> msgs = msgMapper.list(req.getLastid(), req.getSize());
 		
 		return null;
 	}

@@ -1,5 +1,7 @@
 package com.cjj.wedding.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cjj.dto.InviteInfoDTO;
+import com.cjj.dto.MsgDTO;
 import com.cjj.request.CodeRequest;
 import com.cjj.request.DataRequest;
+import com.cjj.request.MsgListRequest;
 import com.cjj.request.PageRequest;
 import com.cjj.request.UserInfoRequest;
 import com.cjj.response.GeneralResponse;
@@ -54,10 +58,10 @@ public class UserController {
 	
 	@ApiOperation(value="获取用户openid和sessionkey", notes="从微信服务端获取openid和sessionkey", produces = "application/json")  
 	@RequestMapping(value = "getMsg", method = RequestMethod.POST)
-	public GeneralResponse getMsg(@RequestBody PageRequest req) {
+	public GeneralResponse getMsg(@RequestBody MsgListRequest req) {
 		logger.info("getMsg req=" + req.toString());
-		userService.addMsg(req.getToken(), EmojiFilter.filterEmoji(req.getData()));
-		return GeneralResponse.SUCCESS();
+		List<MsgDTO> dtos = userService.listMsg(req);
+		return GeneralResponse.SUCCESS(dtos);
 	}
 	
 }

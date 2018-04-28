@@ -5,7 +5,7 @@ import java.util.List;
 import com.cjj.dto.InviteInfoDTO;
 import com.cjj.dto.MsgDTO;
 import com.cjj.dto.WXUserDTO;
-import com.cjj.request.PageRequest;
+import com.cjj.request.MsgListRequest;
 
 public interface UserService {
 	
@@ -15,5 +15,5 @@ public interface UserService {
 	
 	void addMsg(String token,String msg);
 
-	List<MsgDTO> listMsg(PageRequest req);
+	List<MsgDTO> listMsg(MsgListRequest req);
 }
